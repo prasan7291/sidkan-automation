@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="14" fill="#070B14"/>
+  <rect x="2" y="2" width="60" height="60" rx="12" stroke="url(#paint0_linear)" stroke-width="2"/>
+  <rect x="18" y="18" width="28" height="28" rx="6" fill="#0C1424" stroke="#00F0FF" stroke-width="2"/>
+  <circle cx="32" cy="32" r="5" fill="#00F0FF"/>
+  <!-- Pins -->
+  <path d="M12 24H18M12 32H18M12 40H18" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M46 24H52M46 32H52M46 40H52" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M24 12V18M32 12V18M40 12V18" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"/>
+  <path d="M24 46V52M32 46V52M40 46V52" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"/>
+  <defs>
+    <linearGradient id="paint0_linear" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00F0FF"/>
+      <stop offset="0.5" stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#F59E0B"/>
+    </linearGradient>
+  </defs>
+</svg>
