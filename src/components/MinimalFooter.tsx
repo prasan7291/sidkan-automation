@@ -13,11 +13,11 @@ export const MinimalFooter: React.FC = () => {
           </div>
 
           <a
-            href="mailto:contact@sidkanautomation.com"
+            href="mailto:raoprasan123@gmail.com"
             className="text-[#86868b] hover:text-white transition-colors flex items-center gap-1.5"
           >
             <Mail className="w-3.5 h-3.5" />
-            <span>contact@sidkanautomation.com</span>
+            <span>raoprasan123@gmail.com</span>
           </a>
         </div>
 

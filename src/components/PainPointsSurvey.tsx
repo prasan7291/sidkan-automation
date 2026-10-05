@@ -4,8 +4,10 @@ import {
   ArrowRight, 
   ArrowLeft, 
   HelpCircle,
-  Send
+  Send,
+  Loader2
 } from 'lucide-react';
+import { sendSurveyResponse } from '../services/emailService';
 
 interface SurveyData {
   primaryPainPoint: string;
@@ -22,6 +24,7 @@ interface PainPointsSurveyProps {
 
 export const PainPointsSurvey: React.FC<PainPointsSurveyProps> = ({ onOpenExplainModal }) => {
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   const [answers, setAnswers] = useState<SurveyData>({
@@ -163,8 +166,22 @@ export const PainPointsSurvey: React.FC<PainPointsSurveyProps> = ({ onOpenExplai
     setSubmitted(false);
   };
 
-  const handleSubmitFinal = (e: React.FormEvent) => {
+  const handleSubmitFinal = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      await sendSurveyResponse({
+        primaryPainPoint: painPointOptions.find(o => o.id === answers.primaryPainPoint)?.label || answers.primaryPainPoint,
+        signalsFocus: signalsOptions.find(o => o.id === answers.signalsFocus)?.label || answers.signalsFocus,
+        currentWorkflow: workflowOptions.find(o => o.id === answers.currentWorkflow)?.label || answers.currentWorkflow,
+        desiredSolution: solutionOptions.find(o => o.id === answers.desiredSolution)?.label || answers.desiredSolution,
+        name: answers.name,
+        email: answers.email,
+      });
+    } catch (err) {
+      console.error('Failed to dispatch survey:', err);
+    }
+    setIsSubmitting(false);
     setSubmitted(true);
   };
 
@@ -410,10 +427,20 @@ export const PainPointsSurvey: React.FC<PainPointsSurveyProps> = ({ onOpenExplai
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 rounded-full font-medium text-xs text-black bg-white hover:bg-[#e5e5e7] transition-all flex items-center justify-center gap-1.5 mt-2"
+                    disabled={isSubmitting}
+                    className="w-full py-3.5 rounded-full font-medium text-xs text-black bg-white hover:bg-[#e5e5e7] disabled:opacity-60 transition-all flex items-center justify-center gap-1.5 mt-2"
                   >
-                    <Send className="w-3.5 h-3.5" />
-                    <span>Send Me My Custom Assessment</span>
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin text-black" />
+                        <span>Sending Assessment to Engineering Team...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-3.5 h-3.5" />
+                        <span>Send Me My Custom Assessment</span>
+                      </>
+                    )}
                   </button>
                 </form>
               </>
@@ -424,8 +451,7 @@ export const PainPointsSurvey: React.FC<PainPointsSurveyProps> = ({ onOpenExplai
                 </div>
                 <h4 className="text-lg font-semibold text-white">Thank you for sharing your feedback.</h4>
                 <p className="text-xs text-[#86868b] max-w-md mx-auto leading-relaxed">
-                  Our systems engineering team at Sidkan Automation will review your test requirements 
-                  and reach out with suggested hardware configurations and pinout drawings.
+                  Your validation requirements have been delivered to our engineering team at <strong className="text-white">raoprasan123@gmail.com</strong>. We will review your test requirements and reach out with suggested hardware configurations and pinout drawings.
                 </p>
                 <div className="pt-2">
                   <button
